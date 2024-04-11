@@ -32,8 +32,19 @@ class FavouriteAlbumController extends Controller
 
     public function saveFavouriteAlbum(Request $request){
 
-    //   try {
-        $fav_artist = favouritealbum::create([
+        try{
+        $myFaves = favouritealbum::where('username', $request->username)->get();
+
+        $count =0;
+
+        foreach($myFaves as $fave){
+         if($fave->album ==$request->album){
+            $count+=1;
+         }
+        }
+        
+        if($count==0){
+        $fav_album = favouritealbum::create([
             'username'=>$request->username,
             'artist'=>$request->artist,
             'album'=>$request->album,
@@ -41,12 +52,21 @@ class FavouriteAlbumController extends Controller
         $responseData = (["message"=>"success"]);
 
         return response($responseData,200);
-    //   } catch (\Throwable $th) {
+    }
 
-    //     $responseData = (["message"=>"failure"]);
+    else{
+       
+            $responseData = (["message"=>"duplicate"]);
+    
+            return response($responseData,200);
+        }
+    }
+       catch (\Throwable $th) {
 
-    //     return response($responseData,300);
-    //   }
+        $responseData = (["message"=>"failure"]);
+
+        return response($responseData,300);
+      }
 
 
     }

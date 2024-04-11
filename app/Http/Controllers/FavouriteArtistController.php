@@ -24,21 +24,41 @@ class FavouriteArtistController extends Controller
     // function to save User Favourite Artist  to database
 
     public function saveFavouriteArtist(Request $request){
-        try {
+        try{
+            $myFaves =  favouriteartist::where('username', $request->username)->get();
+    
+            $count =0;
+    
+            foreach($myFaves as $fave){
+             if($fave->artist ==$request->artist){
+                $count+=1;
+             }
+            }
             
+            if($count==0){
             $fav_artist = favouriteartist::create([
                 'username'=>$request->username,
-                'artist'=>$request->artist
+                'artist'=>$request->artist,
             ]);
             $responseData = (["message"=>"success"]);
-            return response($responseData,200);        
+    
+            return response($responseData,200);
         }
-            
-            catch (\Throwable $th) {
-          $responseData = (["message"=>"error"]);
-          return response($responseData,300);
-        }
+    
+        else{
+           
+                $responseData = (["message"=>"duplicate"]);
         
-
-    }
+                return response($responseData,200);
+            }
+        }
+           catch (\Throwable $th) {
+    
+            $responseData = (["message"=>"failure"]);
+    
+            return response($responseData,300);
+          }
+    
+    
+        }
 }
