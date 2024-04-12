@@ -22,3 +22,7 @@ Route::post('/getFavArtists',[FavouriteArtistController::class, 'getFavouriteArt
 
 Route::post('/saveFavAlbum',[FavouriteAlbumController::class, 'saveFavouriteAlbum'])->name('savefavAlbum');
 Route::post('/getFavAlbums',[FavouriteAlbumController::class, 'getFavouriteAlbums'])->name('getfavAlbums');
+
+Route::post('/deleteFavAlbum',[FavouriteAlbumController::class, 'deleteFavouriteAlbum'])->name('deletefavAlbum');
+
+Route::post('/deleteFavArtist',[FavouriteArtistController::class, 'deleteFavouriteArtist'])->name('deletefavArtist');

@@ -61,4 +61,21 @@ class FavouriteArtistController extends Controller
     
     
         }
+
+
+    public function deleteFavouriteArtist(Request $request){
+        try{
+            $artist = favouriteartist::where(['username'=> $request->username, 
+        'artist'=>$request->artist])->get()[0];
+        $artist->delete();
+        $responseData = (["message"=>"success"]);
+        return response($responseData,200);
+
+        } catch (\Throwable $th) {
+            $responseData = (["message"=>"failure"]);
+            return response($responseData,300);
+
+        }
+     
+    }
 }

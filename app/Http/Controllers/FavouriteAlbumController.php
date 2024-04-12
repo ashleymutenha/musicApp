@@ -70,4 +70,21 @@ class FavouriteAlbumController extends Controller
 
 
     }
+
+
+    public function deleteFavouriteAlbum(Request $request){
+        try {
+            $album = favouritealbum::where(['username'=> $request->username, 
+        'album'=>$request->album,'artist'=>$request->artist])->get()[0];
+        $album->delete();
+        $responseData = (["message"=>"success"]);
+        return response($responseData,200);
+
+        } catch (\Throwable $th) {
+            $responseData = (["message"=>"failure"]);
+            return response($responseData,300);
+
+        }
+     
+    }
 }
